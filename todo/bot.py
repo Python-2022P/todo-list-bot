@@ -1,6 +1,7 @@
 import requests
 from .settings import base_url
-from telegram import Update
+from telegram import Update,  ReplyKeyboardMarkup
+
 from telegram.ext import CallbackContext
 
 
@@ -21,8 +22,14 @@ def start(update: Update, context: CallbackContext):
     url_for_register = f'{base_url}/create-user'
     response = requests.post(url_for_register, json=user)
 
+    # Define the keyboard options
+    options = [['my tasks']]
 
-    update.message.reply_markdown_v2('*Hello, welcome to our bot\!*')
+    # Create the reply keyboard
+    reply_markup = ReplyKeyboardMarkup(options)
+
+
+    update.message.reply_markdown_v2('*Hello, welcome to our bot\!*', reply_markup=reply_markup)
     
 
 def get_tasks(update: Update, context: CallbackContext):
